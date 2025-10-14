@@ -1,0 +1,38 @@
+using UnityEngine;
+
+public abstract class Character : MonoBehaviour
+{
+    
+    private int health; public int Health { get { return health; } private set { health = Mathf.Clamp(value,0,100); } }
+
+    protected Animator animator;
+    protected Rigidbody2D rb2d;
+
+    public void TakeDamage(int dmg)
+    {
+        Health -= dmg;
+        Debug.Log($"{this.name} took damage {dmg}, HP: {Health}");
+    }
+
+    public bool IsDead()
+    {
+        if (Health <= 0)
+        {
+            Destroy(this);
+            Debug.Log($"{this.name} is dead");
+            return true;
+        }
+        return false;
+    }
+
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
