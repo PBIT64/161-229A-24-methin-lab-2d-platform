@@ -25,14 +25,11 @@ public abstract class Character : MonoBehaviour
         return false;
     }
 
-    void Start()
+    public void Initialize(int startHealth)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Health = startHealth;
+        Debug.Log($"{this.name} initialized with HP: {Health}");
+        animator = GetComponent<Animator>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
 }
