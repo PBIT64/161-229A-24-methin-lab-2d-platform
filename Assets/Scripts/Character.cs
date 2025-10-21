@@ -12,18 +12,20 @@ public abstract class Character : MonoBehaviour
     {
         Health -= dmg;
         Debug.Log($"{this.name} took damage {dmg}, HP: {Health}");
+        IsDead();
     }
 
     public bool IsDead()
     {
         if (Health <= 0)
         {
-            Destroy(this);
+            GameObject.Destroy(this);
             Debug.Log($"{this.name} is dead");
             return true;
         }
         return false;
     }
+
 
     public void Initialize(int startHealth)
     {

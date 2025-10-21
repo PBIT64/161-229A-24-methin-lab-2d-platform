@@ -16,7 +16,6 @@ public class Crocodile : Enemy
     private void FixedUpdate() => Behavior();
     public override void Behavior()
     {
-
         Vector2 distance = transform.position - player.transform.position;
         if (distance.magnitude <= atkRange)
         {
