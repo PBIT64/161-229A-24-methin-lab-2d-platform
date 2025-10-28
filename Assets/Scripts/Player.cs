@@ -1,12 +1,12 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : Character
+public class Player : Character, IShootable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Initialize(100);
-    }
+    [field: SerializeField] public GameObject Bullet { get; set; }
+    [field: SerializeField] public Transform ShootPoint { get; set; }
+    public float ReloadTime {  get; set; }
+    public float WaitTime { get; set; }
 
     public void OnHitWith(Enemy enemy) => TakeDamage(enemy.DamageHit);
 
@@ -18,4 +18,31 @@ public class Player : Character
             OnHitWith(enemy);
         }
     }
+    void Start()
+    {
+        Initialize(999999);
+        
+        ReloadTime = 1;
+        WaitTime = 0;
+    }
+    private void FixedUpdate()
+    {
+        WaitTime += Time.deltaTime;
+    }
+    private void Update()
+    {
+        Shoot();
+    }
+    public void Shoot()
+    {
+        if (Input.GetButtonDown("Fire1") && WaitTime >= ReloadTime)
+        {
+            var bullet = Instantiate(Bullet, ShootPoint.position, Quaternion.identity);
+            Banana banana = bullet.GetComponent<Banana>();
+            if (banana != null)
+                banana.InitWeapon(200, this);
+            WaitTime = 0;
+        }
+    }
+
 }

@@ -1,30 +1,53 @@
+using Unity.Mathematics;
 using UnityEngine;
 
-public class Crocodile : Enemy
+public class Crocodile : Enemy,IShootable
 {
     [SerializeField] private float atkRange;
     public Player player;
 
+    [field: SerializeField]
+    public GameObject Bullet { get; set; }
+    [field: SerializeField]
+    public Transform ShootPoint { get; set; }
+    public float WaitTime { get; set; }
+    public float ReloadTime { get; set; }
+
     public void Start()
     {
         base.Initialize(50);
-        DamageHit = 30;
+        DamageHit = 20;
 
         atkRange = 6f;
         player = GameObject.FindFirstObjectByType<Player>();
+
+        WaitTime = 0;
+        ReloadTime = 1f;
     }
-    private void FixedUpdate() => Behavior();
+    private void FixedUpdate() {
+        WaitTime += Time.deltaTime;
+        Behavior();
+    }
     public override void Behavior()
     {
+        if (player == null) {
+            return;
+        }
         Vector2 distance = transform.position - player.transform.position;
         if (distance.magnitude <= atkRange)
         {
-            Debug.Log($"{player.name} is in the {this.name}'s atk range!");
             Shoot();
         }
     }
     public void Shoot()
     {
-        Debug.Log($"{this.name} shoots rock to the {player.name}!");
+        if (WaitTime >= ReloadTime) 
+        {
+            animator.SetTrigger("Shoot");
+            var bullet = Instantiate(Bullet, ShootPoint.position, Quaternion.identity);
+            Rock rock = bullet.GetComponent<Rock>();
+            rock.InitWeapon(5, this);
+            WaitTime = 0;
+        }
     }
 }
