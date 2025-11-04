@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class HealthBar : MonoBehaviour
+public class HealthBar : MonoBehaviour
 {
     [SerializeField] GameObject HealthBar_Prefab;
 
