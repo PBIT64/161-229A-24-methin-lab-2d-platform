@@ -18,9 +18,8 @@ public class Banana : Weapon
     }
     void Start()
     {
-        //InitWeapon(10,)
+        if (Shooter == null) return;
         speed = 10.0f * GetShootDirection();
-        damage = 5;
         Destroy(this.gameObject, 1);
     }
     private void FixedUpdate()

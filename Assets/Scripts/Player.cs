@@ -29,8 +29,9 @@ public class Player : Character, IShootable
     {
         WaitTime += Time.deltaTime;
     }
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         Shoot();
     }
     public void Shoot()
@@ -39,8 +40,9 @@ public class Player : Character, IShootable
         {
             var bullet = Instantiate(Bullet, ShootPoint.position, Quaternion.identity);
             Banana banana = bullet.GetComponent<Banana>();
+            Debug.Log(banana);
             if (banana != null)
-                banana.InitWeapon(200, this);
+                banana.InitWeapon(10, this);
             WaitTime = 0;
         }
     }

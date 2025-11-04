@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Character : MonoBehaviour
+public abstract class Character : HealthBar
 {
     private float maxhealth; public float MaxHealth { get { return maxhealth; } private set { maxhealth = Mathf.Clamp(value, 0, 100); } }
     private float health; public float Health { get { return health; } private set { health = Mathf.Clamp(value,0,100); } }
@@ -34,6 +34,7 @@ public abstract class Character : MonoBehaviour
         MaxHealth = Health;
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
+        HealthInitialize();
     }
     
 }
